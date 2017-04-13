@@ -1,0 +1,48 @@
+import os
+import re
+
+from selenium import webdriver
+
+
+###### General
+
+EDITOR  = 'vim'
+BASEDIR = os.path.expanduser('~/.track/')
+LOG     = BASEDIR + 'track.log'
+ARCHIVE = BASEDIR + 'track.archive'
+
+# These 'projects' are not counted towards day totals
+BREAKS = ['break', 'lunch', 'arrive', 'done']
+
+# Name of project to track unbillable time that counts towards day total
+NO_BILL = 'nobill'
+
+# What to print for activities with no associated issue
+NO_ISSUE = 'N/A'
+
+# Number of minutes to round up to when summarizing task times
+# (Rounding is per day, not per activity, so if 22 minutes + 17 minutes is
+# logged in a day in an issue, and rounding is to 15 mins, the day total for
+# the issue will be 45 minutes (rounded up from 39).
+SUMMARY_ROUND = 15  
+
+# Date/datetime formats, probably don't change this
+DATEFMT     = '%Y/%m/%d %A'
+DATETIMEFMT = '%Y/%m/%d %A %H:%M'
+
+
+###### Redmine Integration
+
+USERNAME    = 'username'
+USERID      = 1000
+REDMINE_URL = 'https://redmine.example.org'
+DRIVER      = webdriver.Chrome
+re_issue    = re.compile(r'^[0-9]+$') # regex for valid redmine issue no.
+
+
+###### Awesome WM Integration
+
+# Set to None to disable awesome wm integration
+# If set, track will update the text of the widget named here to display the
+# currently tracked project and issue.
+AWESOME_WIDGET = 'mytrackbox'
